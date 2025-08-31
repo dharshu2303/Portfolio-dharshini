@@ -9,11 +9,8 @@ const About = () => {
     const skillsObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Get the width from data-level and set it as a CSS variable
           const width = entry.target.getAttribute('data-level');
           entry.target.style.setProperty('--target-width', width);
-          
-          // Add the animate class to trigger the animation
           entry.target.classList.add('animate');
         }
       });
@@ -23,10 +20,7 @@ const About = () => {
 
     skillBars.forEach(bar => {
       if (bar) {
-        // Get the percentage from the sibling element
         const percentage = bar.parentElement.previousElementSibling.querySelector('span:last-child').textContent;
-        
-        // Store the width as a data attribute
         bar.setAttribute('data-level', percentage);
         
         skillsObserver.observe(bar);
@@ -59,7 +53,6 @@ const About = () => {
                 <ul className="list-unstyled">
                   <li className="mb-2"><strong className="neon-green">Name:</strong> DHARSHINI PRIYA</li>
                   <li className="mb-2"><strong className="neon-green">Email:</strong> dharshinipriya.a426@gmail.com</li>
-                  <li className="mb-2"><strong className="neon-green">Phone:</strong> 9345844943</li>
                 </ul>
               </div>
               <div className="col-md-6">
