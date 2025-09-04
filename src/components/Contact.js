@@ -37,7 +37,7 @@ const Contact = () => {
                 <div className="d-flex">
                   <a href="https://github.com/dharshu2303" className="social-icon neon-blue"><i className="fab fa-github"></i></a>
                   <a href="https://www.linkedin.com/in/dharshini-priya-a-74a446290/" className="social-icon neon-blue"><i className="fab fa-linkedin-in"></i></a>
-                  <a href="https://www.instagram.com/dharshinipriya_2303__/" className="social-icon neon-green"><i className="fab fa-instagram"></i></a>
+    
                 </div>
               </div>
             </div>
