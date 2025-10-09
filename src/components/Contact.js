@@ -24,20 +24,12 @@ const Contact = () => {
                     <p className="mb-0">dharshinipriya.a426@gmail.com</p>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <i className="fas fa-phone-alt fa-2x me-3 neon-green"></i>
-                  <div>
-                    <h5 className="mb-0">Phone</h5>
-                    <p className="mb-0">9345844943</p>
-                  </div>
-                </div>
               </div>
               <div className="mt-auto">
                 <h5 className="mb-3 neon-text">Follow Me</h5>
                 <div className="d-flex">
                   <a href="https://github.com/dharshu2303" className="social-icon neon-blue"><i className="fab fa-github"></i></a>
                   <a href="https://www.linkedin.com/in/dharshini-priya-a-74a446290/" className="social-icon neon-blue"><i className="fab fa-linkedin-in"></i></a>
-    
                 </div>
               </div>
             </div>
