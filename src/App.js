@@ -10,7 +10,7 @@ import Awards from './components/Awards';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import './App.css';
-
+import './styles/responsive.css';
 function App() {
   useEffect(() => {
     // Initialize particles.js
