@@ -1,0 +1,61 @@
+
+img, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Box sizing and prevent horizontal overflow */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body, #root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Navbar spacing when fixed-top */
+body {
+  /* adjust this value if navbar height is different; ensures content not hidden behind navbar */
+  padding-top: 70px;
+}
+
+/* Brand image */
+.brand-img {
+  max-width: 90px;
+  height: auto;
+}
+
+/* Profile image sizing (keeps it reasonable on desktop and small on mobile) */
+.profile-img {
+  max-width: 320px;
+  width: 80%;
+  height: auto;
+}
+
+/* Hero adjustments: stack columns on medium/smaller screens */
+@media (max-width: 991.98px) {
+  #hero .row {
+    flex-direction: column;
+  }
+  #hero .col-lg-6 {
+    max-width: 100%;
+  }
+}
+
+/* Reduce very large typography on small screens */
+@media (max-width: 575.98px) {
+  .display-5 { font-size: 1.6rem; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.25rem; }
+  body { font-size: 0.95rem; }
+}
+
+/* Prevent particle canvas or absolute overlays from causing overflow */
+.particles-wrapper, .canvas-overlay {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
