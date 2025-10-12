@@ -1,4 +1,6 @@
+/* Safe responsive helpers */
 
+/* Make all media scale */
 img, video, canvas, iframe {
   max-width: 100%;
   height: auto;
@@ -58,4 +60,75 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
+}
+
+/* ---------------------------
+   SECTION TITLE: center on mobile
+   --------------------------- */
+/* default: keep existing left alignment for larger screens */
+.section-title {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+/* center the section title on small screens */
+@media (max-width: 767.98px) {
+  .section-title {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* optionally reduce width so the decorative spans wrap nicely */
+    max-width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  /* if your .neon-text or other inner spans need display block to center nicely */
+  .section-title span {
+    display: inline-block;
+  }
+}
+
+/* ---------------------------
+   GRADIENT ON HOVER / TOUCH
+   Apply to cards/boxes using the class `gradient-hover`
+   Example usage: <div className="card gradient-hover">...</div>
+   --------------------------- */
+
+/* base transition so effect animates nicely */
+.gradient-hover {
+  transition: background-image 250ms ease, box-shadow 250ms ease, transform 160ms ease;
+  /* keep existing background for desktop by default (or transparent) */
+  background-image: none;
+  cursor: pointer;
+}
+
+/* desktop hover/focus state */
+.gradient-hover:hover,
+.gradient-hover:focus,
+.gradient-hover:active {
+  background-image: linear-gradient(135deg, rgba(0,245,255,0.12) 0%, rgba(0,123,255,0.14) 50%, rgba(0,245,255,0.08) 100%);
+  box-shadow: 0 8px 24px rgba(0,123,255,0.08);
+  transform: translateY(-3px);
+}
+
+/* class-based hover (used by JS on touch devices) */
+.gradient-hover.hover {
+  background-image: linear-gradient(135deg, rgba(0,245,255,0.12) 0%, rgba(0,123,255,0.14) 50%, rgba(0,245,255,0.08) 100%);
+  box-shadow: 0 8px 24px rgba(0,123,255,0.08);
+  transform: translateY(-3px);
+}
+
+/* On small screens we want the gradient to appear more easily (since :hover isn't reliable) */
+/* Option A: show gradient on tap (we provide JS below). */
+/* Option B (fallback): show a subtle gradient by default on very small screens */
+@media (max-width: 575.98px) {
+  .gradient-hover.mobile-always {
+    background-image: linear-gradient(135deg, rgba(0,245,255,0.06) 0%, rgba(0,123,255,0.08) 50%, rgba(0,245,255,0.04) 100%);
+  }
+}
+
+/* ensure text color remains readable on gradient */
+.gradient-hover,
+.gradient-hover * {
+  transition: color 160ms ease;
 }
