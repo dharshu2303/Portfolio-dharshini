@@ -141,6 +141,10 @@ section {
 
 /* Remove any hard-coded left offsets you had (e.g. margin-left: 700px).
    Use this rule instead to center heading and the underline */
+/* Centered section title + centered glowing underline */
+
+/* Remove any hard-coded left offsets you had (e.g. margin-left: 700px).
+   Use this rule instead to center heading and the underline */
 .section-title {
   position: relative;
   display: block;
@@ -187,6 +191,8 @@ section {
     width: 140px;
   }
 }
+
+/* If you want the bar to exactly match the text width (not a fixed bar), see note below */
 
 /* If you want the bar to exactly match the text width (not a fixed bar), see note below */
 #hero {
