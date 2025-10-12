@@ -136,42 +136,55 @@ section {
     position: relative;
 }
 
+/* Center section title and center the glowing underline beneath it */
+
 .section-title {
-    position: relative;
-    display: inline-block;
-    margin-left: 500px; /* keep your left positioning */
-    margin-bottom: 50px;
-    font-weight: 700;
-    font-size: 2.5rem;
-    text-align: left; /* ensure alignment starts from left */
-    color: white;
+  position: relative;
+  display: inline-block;      /* inline-block so width matches text */
+  margin: 0 auto 50px auto;   /* horizontally center the inline-block */
+  font-weight: 700;
+  font-size: 2.5rem;
+  text-align: center;         /* center text inside the element */
+  line-height: 1.1;
+  padding: 0 0.5rem;
 }
 
-/* underline directly below the heading */
+/* Centered glowing underline (fixed-length, responsive) */
 .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px; /* places it just below the text */
-
-    width: 100%; /* matches the heading width */
-    height: 3px;
-    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-    border-radius: 3px;
-    animation: underline-glow 2s infinite alternate;
+  content: '';
+  position: absolute;
+  left: 50%;                  /* center relative to the heading element */
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 220px;               /* desired bar length; adjust as needed */
+  max-width: 80%;             /* responsive cap so it never overflows */
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  border-radius: 3px;
+  animation: underline-glow 2s infinite alternate;
 }
 
+/* Make heading and underline smaller on narrow screens */
+@media (max-width: 767.98px) {
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+  .section-title::after {
+    width: 140px;             /* shorter underline on small screens */
+    bottom: -8px;
+  }
+}
+
+/* Keep your underline-glow keyframes (no change needed) */
 @keyframes underline-glow {
-    from {
-        box-shadow: 0 0 5px var(--neon-blue),
-                    0 0 10px var(--neon-pink);
-    }
-    to {
-        box-shadow: 0 0 10px var(--neon-blue),
-                    0 0 20px var(--neon-pink),
-                    0 0 30px var(--neon-purple);
-    }
+  from {
+    box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-pink);
+  }
+  to {
+    box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-purple);
+  }
 }
-
 #hero {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
