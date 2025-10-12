@@ -152,7 +152,7 @@ section {
     content: '';
     position: absolute;
     bottom: -10px; /* places it just below the text */
-    left: 0; /* starts at the beginning of the text */
+
     width: 100%; /* matches the heading width */
     height: 3px;
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
