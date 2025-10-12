@@ -67,7 +67,7 @@ body {
    --------------------------- */
 /* default: keep existing left alignment for larger screens */
 .section-title {
-  text-align: center;
+  text-align: right;
   margin-bottom: 1.5rem;
 }
 
@@ -130,4 +130,5 @@ body {
 .gradient-hover * {
   transition: color 160ms ease;
 }
+
 
