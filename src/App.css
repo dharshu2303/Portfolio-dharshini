@@ -137,43 +137,31 @@ section {
 }
 
 /* Center section title and center the glowing underline beneath it */
-
 .section-title {
   position: relative;
-  display: inline-block;      /* inline-block so width matches text */
-  margin: 0 auto 50px auto;   /* horizontally center the inline-block */
+  display: inline-block;       /* width equals text width */
+  margin: 0 auto 40px auto;    /* centers the inline-block */
   font-weight: 700;
   font-size: 2.5rem;
-  text-align: center;         /* center text inside the element */
-  line-height: 1.1;
-  padding: 0 0.5rem;
+  text-align: center;
+  z-index: 1000;               /* ensure heading itself is in a high stacking layer */
 }
 
-/* Centered glowing underline (fixed-length, responsive) */
+/* Centered glowing underline that sits above other content */
 .section-title::after {
   content: '';
   position: absolute;
-  left: 50%;                  /* center relative to the heading element */
+  left: 50%;
   transform: translateX(-50%);
   bottom: -10px;
-  width: 220px;               /* desired bar length; adjust as needed */
-  max-width: 80%;             /* responsive cap so it never overflows */
+  width: 220px;                /* adjust to taste; use % if you want it relative */
+  max-width: 80%;
   height: 3px;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   border-radius: 3px;
   animation: underline-glow 2s infinite alternate;
-}
-
-/* Make heading and underline smaller on narrow screens */
-@media (max-width: 767.98px) {
-  .section-title {
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-  }
-  .section-title::after {
-    width: 140px;             /* shorter underline on small screens */
-    bottom: -8px;
-  }
+  z-index: 1100;               /* higher than nearby cards so it's painted on top */
+  pointer-events: none;        /* so underline doesn't block clicks */
 }
 
 /* Keep your underline-glow keyframes (no change needed) */
