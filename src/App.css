@@ -137,43 +137,58 @@ section {
 }
 
 /* Center section title and center the glowing underline beneath it */
+/* Centered section title + centered glowing underline */
+
+/* Remove any hard-coded left offsets you had (e.g. margin-left: 700px).
+   Use this rule instead to center heading and the underline */
 .section-title {
   position: relative;
-  display: inline-block; 
-  margin-left:500px;/* width equals text width */
-
+  display: block;
+  margin: 0 0 40px;       /* spacing below the heading */
   font-weight: 700;
   font-size: 2.5rem;
-  text-align: center;
-  z-index: 1000;               /* ensure heading itself is in a high stacking layer */
+  text-align: center;     /* center the heading text */
 }
 
-/* Centered glowing underline that sits above other content */
+/* Centered glowing bar under the heading.
+   We use a block pseudo-element and auto margins so it is centered under the text. */
 .section-title::after {
   content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10px;
-  width: 220px;                /* adjust to taste; use % if you want it relative */
-  max-width: 80%;
+  display: block;
+  width: 220px;           /* length of the glow bar (adjust as desired) */
+  max-width: 60%;         /* cap it responsively */
   height: 3px;
+  margin: 12px auto 0;    /* centers the bar under the heading */
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   border-radius: 3px;
   animation: underline-glow 2s infinite alternate;
-  z-index: 1100;               /* higher than nearby cards so it's painted on top */
-  pointer-events: none;        /* so underline doesn't block clicks */
 }
 
-/* Keep your underline-glow keyframes (no change needed) */
+/* Glow keyframes (keep your existing animation) */
 @keyframes underline-glow {
   from {
-    box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-pink);
+    box-shadow: 0 0 5px var(--neon-blue),
+                0 0 10px var(--neon-pink);
   }
   to {
-    box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-purple);
+    box-shadow: 0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-pink),
+                0 0 30px var(--neon-purple);
   }
 }
+
+/* Mobile adjustments: smaller font and shorter bar */
+@media (max-width: 767.98px) {
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+  .section-title::after {
+    width: 140px;
+  }
+}
+
+/* If you want the bar to exactly match the text width (not a fixed bar), see note below */
 #hero {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
