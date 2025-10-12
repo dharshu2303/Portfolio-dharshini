@@ -67,27 +67,25 @@ body {
    --------------------------- */
 /* default: keep existing left alignment for larger screens */
 .section-title {
-  text-align: left;
+  text-align: center;
   margin-bottom: 1.5rem;
 }
 
-/* center the section title on small screens */
+/* Center section-title on mobile (phones) */
 @media (max-width: 767.98px) {
   .section-title {
-    text-align: center;
+    text-align: center !important;
     margin-left: auto;
     margin-right: auto;
-    /* optionally reduce width so the decorative spans wrap nicely */
     max-width: 100%;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-  /* if your .neon-text or other inner spans need display block to center nicely */
   .section-title span {
     display: inline-block;
   }
 }
-
+ 
 /* ---------------------------
    GRADIENT ON HOVER / TOUCH
    Apply to cards/boxes using the class `gradient-hover`
@@ -132,3 +130,4 @@ body {
 .gradient-hover * {
   transition: color 160ms ease;
 }
+
