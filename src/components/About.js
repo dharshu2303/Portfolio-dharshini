@@ -37,7 +37,7 @@ const About = () => {
   return (
     <section id="about" className="animate-on-scroll">
       <div className="container">
-        <h2 className="section-title neon-text">ABOUT <span className="neon-pink">ME</span></h2>
+        <h2 className="section-title neon-text text-center text-lg-start">ABOUT <span className="neon-pink">ME</span></h2>
         <div className="row">
           <div className="col-lg-6">
             <h3 className="mb-4">Who am I?</h3>
