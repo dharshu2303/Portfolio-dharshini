@@ -140,36 +140,35 @@ section {
     position: relative;
     display: inline-block;
     margin-bottom: 50px;
-    margin-left: 700px;
     font-weight: 700;
     font-size: 2.5rem;
     text-align: center;
+    color: white;
 }
 
+/* Glowing underline */
 .section-title::after {
     content: '';
     position: absolute;
-  margin-left: 700px;
-    bottom: -10px;
-    left: 0;
-    width: 100%;
+    bottom: -10px; /* directly below the text */
+    left: 50%;
+    transform: translateX(-50%); /* centers it exactly below */
+    width: 120px; /* adjust underline width as needed */
     height: 3px;
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
     border-radius: 3px;
     animation: underline-glow 2s infinite alternate;
-    text-align: center;
 }
 
 @keyframes underline-glow {
     from {
         box-shadow: 0 0 5px var(--neon-blue),
-            0 0 10px var(--neon-pink);
+                    0 0 10px var(--neon-pink);
     }
-
     to {
         box-shadow: 0 0 10px var(--neon-blue),
-            0 0 20px var(--neon-pink),
-            0 0 30px var(--neon-purple);
+                    0 0 20px var(--neon-pink),
+                    0 0 30px var(--neon-purple);
     }
 }
 
