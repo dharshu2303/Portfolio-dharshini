@@ -139,7 +139,7 @@ section {
 .section-title {
     position: relative;
     display: inline-block;
-    margin-left: 700px; /* keep your left positioning */
+    margin-left: 500px; /* keep your left positioning */
     margin-bottom: 50px;
     font-weight: 700;
     font-size: 2.5rem;
