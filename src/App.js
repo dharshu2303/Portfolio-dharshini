@@ -103,7 +103,57 @@ function App() {
         retina_detect: true
       });
     }
+(() => {
+  // only run on touch-capable devices
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+  if (!isTouch) return;
 
+  const touchElements = () => Array.from(document.querySelectorAll('.gradient-hover'));
+
+  const clearAll = () => {
+    touchElements().forEach(el => el.classList.remove('hover'));
+  };
+
+  // when user touches an element, add .hover to it; remove from others
+  const onTouchStart = (e) => {
+    const el = e.currentTarget;
+    clearAll();
+    el.classList.add('hover');
+  };
+
+  // remove hover after a short delay so finger lift reveals effect briefly
+  const onTouchEnd = (e) => {
+    const el = e.currentTarget;
+    // keep hover for a small duration then remove so effect is visible
+    setTimeout(() => el.classList.remove('hover'), 800);
+  };
+
+  // also remove on scroll or resize to avoid stuck hover
+  const onScrollOrResize = () => clearAll();
+
+  // attach listeners
+  touchElements().forEach(el => {
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+  });
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+
+  // cleanup when component unmounts (insert into return cleanup of useEffect)
+  const cleanupTouchHover = () => {
+    touchElements().forEach(el => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend', onTouchEnd);
+    });
+    window.removeEventListener('scroll', onScrollOrResize);
+    window.removeEventListener('resize', onScrollOrResize);
+  };
+
+  // expose cleanup to the outer return cleanup chain by pushing into window (or integrate into App's existing cleanup)
+  // If your useEffect has a return cleanup function, call cleanupTouchHover() there.
+  // Example: in your existing return () => { ...; cleanupTouchHover(); };
+  window.__cleanupTouchHover = cleanupTouchHover;
+})();
     // Scroll animation
     const animateElements = document.querySelectorAll('.animate-on-scroll');
     const observer = new IntersectionObserver((entries) => {
