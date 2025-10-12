@@ -139,8 +139,9 @@ section {
 /* Center section title and center the glowing underline beneath it */
 .section-title {
   position: relative;
-  display: inline-block;       /* width equals text width */
-  margin: 0 auto 40px auto;    /* centers the inline-block */
+  display: inline-block; 
+  margin-left:500px;/* width equals text width */
+
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
