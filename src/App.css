@@ -139,21 +139,21 @@ section {
 .section-title {
     position: relative;
     display: inline-block;
+    margin-left: 700px; /* keep your left positioning */
     margin-bottom: 50px;
     font-weight: 700;
     font-size: 2.5rem;
-    text-align: center;
+    text-align: left; /* ensure alignment starts from left */
     color: white;
 }
 
-/* Glowing underline */
+/* underline directly below the heading */
 .section-title::after {
     content: '';
     position: absolute;
-    bottom: -10px; /* directly below the text */
-    left: 50%;
-    transform: translateX(-50%); /* centers it exactly below */
-    width: 120px; /* adjust underline width as needed */
+    bottom: -10px; /* places it just below the text */
+    left: 0; /* starts at the beginning of the text */
+    width: 100%; /* matches the heading width */
     height: 3px;
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
     border-radius: 3px;
