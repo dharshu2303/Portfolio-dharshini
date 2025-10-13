@@ -11,7 +11,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import './App.css';
 import './styles/responsive.css';
-
 function App() {
   useEffect(() => {
     // Initialize particles.js
@@ -104,8 +103,58 @@ function App() {
         retina_detect: true
       });
     }
+(() => {
+  // only run on touch-capable devices
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+  if (!isTouch) return;
 
-    // Scroll animation: IntersectionObserver
+  const touchElements = () => Array.from(document.querySelectorAll('.gradient-hover'));
+
+  const clearAll = () => {
+    touchElements().forEach(el => el.classList.remove('hover'));
+  };
+
+  // when user touches an element, add .hover to it; remove from others
+  const onTouchStart = (e) => {
+    const el = e.currentTarget;
+    clearAll();
+    el.classList.add('hover');
+  };
+
+  // remove hover after a short delay so finger lift reveals effect briefly
+  const onTouchEnd = (e) => {
+    const el = e.currentTarget;
+    // keep hover for a small duration then remove so effect is visible
+    setTimeout(() => el.classList.remove('hover'), 800);
+  };
+
+  // also remove on scroll or resize to avoid stuck hover
+  const onScrollOrResize = () => clearAll();
+
+  // attach listeners
+  touchElements().forEach(el => {
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+  });
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+
+  // cleanup when component unmounts (insert into return cleanup of useEffect)
+  const cleanupTouchHover = () => {
+    touchElements().forEach(el => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend', onTouchEnd);
+    });
+    window.removeEventListener('scroll', onScrollOrResize);
+    window.removeEventListener('resize', onScrollOrResize);
+  };
+
+  // expose cleanup to the outer return cleanup chain by pushing into window (or integrate into App's existing cleanup)
+  // If your useEffect has a return cleanup function, call cleanupTouchHover() there.
+  // Example: in your existing return () => { ...; cleanupTouchHover(); };
+  window.__cleanupTouchHover = cleanupTouchHover;
+})();
+    // Scroll animation
     const animateElements = document.querySelectorAll('.animate-on-scroll');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -121,11 +170,9 @@ function App() {
       observer.observe(element);
     });
 
-    // Smooth scrolling for anchor links
-    const anchorElements = Array.from(document.querySelectorAll('a[href^="#"]'));
-    const anchorClickHandlers = [];
-    anchorElements.forEach(anchor => {
-      const handler = function (e) {
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
@@ -136,15 +183,12 @@ function App() {
             behavior: 'smooth'
           });
         }
-      };
-      anchor.addEventListener('click', handler);
-      anchorClickHandlers.push({ anchor, handler });
+      });
     });
 
     // Navbar scroll effect
     const handleScroll = () => {
       const navbar = document.querySelector('.navbar');
-      if (!navbar) return;
       if (window.scrollY > 50) {
         navbar.style.backgroundColor = 'rgba(5, 5, 5, 0.95)';
         navbar.style.boxShadow = '0 2px 10px rgba(0, 245, 255, 0.2)';
@@ -158,129 +202,39 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Icons hover effects (and cleanup handlers)
-    const icons = Array.from(document.querySelectorAll('.fas, .fab'));
-    const iconHandlers = [];
+
+    // Icons effects
+    const icons = document.querySelectorAll('.fas, .fab');
     icons.forEach(icon => {
-      // ensure default neon-blue if not present
       if (!icon.classList.contains('neon-blue') &&
         !icon.classList.contains('neon-pink') &&
         !icon.classList.contains('neon-green')) {
         icon.classList.add('neon-blue');
       }
 
-      const enter = function () {
+      icon.addEventListener('mouseenter', function () {
         this.style.filter = 'drop-shadow(0 0 8px currentColor)';
-      };
-      const leave = function () {
+      });
+
+      icon.addEventListener('mouseleave', function () {
         this.style.filter = 'drop-shadow(0 0 5px currentColor)';
-      };
-
-      icon.addEventListener('mouseenter', enter);
-      icon.addEventListener('mouseleave', leave);
-      iconHandlers.push({ icon, enter, leave });
+      });
     });
 
-    // Form inputs focus effects
-    const formInputs = Array.from(document.querySelectorAll('.form-control'));
-    const inputHandlers = [];
+    // Form inputs effects
+    const formInputs = document.querySelectorAll('.form-control');
     formInputs.forEach(input => {
-      const onFocus = function () {
+      input.addEventListener('focus', function () {
         this.style.boxShadow = '0 0 15px rgba(0, 245, 255, 0.7)';
-      };
-      const onBlur = function () {
+      });
+
+      input.addEventListener('blur', function () {
         this.style.boxShadow = '0 0 10px rgba(0, 245, 255, 0.5)';
-      };
-      input.addEventListener('focus', onFocus);
-      input.addEventListener('blur', onBlur);
-      inputHandlers.push({ input, onFocus, onBlur });
+      });
     });
 
-    // TOUCH-HOVER SIMULATOR FOR .gradient-hover
-    const setupTouchHover = () => {
-      const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-      if (!isTouch) return () => {};
-
-      // Use live NodeList snapshot each time in case DOM changes
-      const getElements = () => Array.from(document.querySelectorAll('.gradient-hover'));
-      let elements = getElements();
-
-      const clearHoverOnAll = () => {
-        elements.forEach(el => el.classList.remove('hover'));
-      };
-
-      const onTouchStart = (e) => {
-        elements = getElements();
-        clearHoverOnAll();
-        e.currentTarget.classList.add('hover');
-      };
-
-      const onTouchEnd = (e) => {
-        const el = e.currentTarget;
-        setTimeout(() => {
-          el.classList.remove('hover');
-        }, 700);
-      };
-
-      const onTouchCancel = (e) => {
-        e.currentTarget.classList.remove('hover');
-      };
-
-      const onScrollOrResize = () => {
-        elements = getElements();
-        clearHoverOnAll();
-      };
-
-      // attach listeners
-      elements.forEach(el => {
-        el.addEventListener('touchstart', onTouchStart, { passive: true });
-        el.addEventListener('touchend', onTouchEnd, { passive: true });
-        el.addEventListener('touchcancel', onTouchCancel, { passive: true });
-      });
-      window.addEventListener('scroll', onScrollOrResize, { passive: true });
-      window.addEventListener('resize', onScrollOrResize);
-
-      // return cleanup
-      return () => {
-        elements.forEach(el => {
-          el.removeEventListener('touchstart', onTouchStart);
-          el.removeEventListener('touchend', onTouchEnd);
-          el.removeEventListener('touchcancel', onTouchCancel);
-        });
-        window.removeEventListener('scroll', onScrollOrResize);
-        window.removeEventListener('resize', onScrollOrResize);
-      };
-    };
-
-    const cleanupTouchHover = setupTouchHover();
-
-    // Clean up on unmount
     return () => {
-      // IntersectionObserver disconnect
-      try { observer.disconnect(); } catch (e) {}
-
-      // anchor listeners cleanup
-      anchorClickHandlers.forEach(({ anchor, handler }) => {
-        anchor.removeEventListener('click', handler);
-      });
-
-      // icons cleanup
-      iconHandlers.forEach(({ icon, enter, leave }) => {
-        icon.removeEventListener('mouseenter', enter);
-        icon.removeEventListener('mouseleave', leave);
-      });
-
-      // form inputs cleanup
-      inputHandlers.forEach(({ input, onFocus, onBlur }) => {
-        input.removeEventListener('focus', onFocus);
-        input.removeEventListener('blur', onBlur);
-      });
-
-      // navbar scroll cleanup
       window.removeEventListener('scroll', handleScroll);
-
-      // touch hover cleanup
-      if (typeof cleanupTouchHover === 'function') cleanupTouchHover();
     };
   }, []);
 
