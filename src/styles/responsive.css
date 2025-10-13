@@ -1,4 +1,4 @@
-/* Safe responsive helpers */
+/* Safe responsive helpers (keep any existing rules you already use) */
 
 /* Make all media scale */
 img, video, canvas, iframe {
@@ -20,7 +20,6 @@ html, body, #root {
 
 /* Navbar spacing when fixed-top */
 body {
-  /* adjust this value if navbar height is different; ensures content not hidden behind navbar */
   padding-top: 70px;
 }
 
@@ -30,7 +29,7 @@ body {
   height: auto;
 }
 
-/* Profile image sizing (keeps it reasonable on desktop and small on mobile) */
+/* Profile image sizing */
 .profile-img {
   max-width: 320px;
   width: 80%;
@@ -47,7 +46,7 @@ body {
   }
 }
 
-/* Reduce very large typography on small screens */
+/* Reduce large typography on small screens */
 @media (max-width: 575.98px) {
   .display-5 { font-size: 1.6rem; }
   h1 { font-size: 1.6rem; }
@@ -63,73 +62,89 @@ body {
 }
 
 /* ---------------------------
-   SECTION TITLE: center on mobile
+   SECTION TITLE (centered example)
    --------------------------- */
-/* default: keep existing left alignment for larger screens */
 .section-title {
+  position: relative;
+  display: block;
+  margin: 0 0 40px;
+  font-weight: 700;
+  font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 1.5rem;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 220px;
+  max-width: 60%;
+  height: 3px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  border-radius: 3px;
+  animation: underline-glow 2s infinite alternate;
+}
+@keyframes underline-glow {
+  from {
+    box-shadow: 0 0 5px var(--neon-blue),
+                0 0 10px var(--neon-pink);
+  }
+  to {
+    box-shadow: 0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-pink),
+                0 0 30px var(--neon-purple);
+  }
 }
 
-/* Center section-title on mobile (phones) */
-@media (max-width: 767.98px) {
-  .section-title {
-    text-align: center !important;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  .section-title span {
-    display: inline-block;
-  }
-}
- 
 /* ---------------------------
-   GRADIENT ON HOVER / TOUCH
-   Apply to cards/boxes using the class `gradient-hover`
-   Example usage: <div className="card gradient-hover">...</div>
+   SPACING TWEAKS (new)
+   - Adds gap after hero buttons on mobile
+   - Adds gap before "Send Me a Message" heading on mobile
    --------------------------- */
 
-/* base transition so effect animates nicely */
-.gradient-hover {
-  transition: background-image 250ms ease, box-shadow 250ms ease, transform 160ms ease;
-  /* keep existing background for desktop by default (or transparent) */
-  background-image: none;
-  cursor: pointer;
-}
+/* Target the hero buttons container (the one with .d-flex.gap-3 inside #hero)
+   and give extra bottom margin on mobile so there's space before the profile image/form */
+@media (max-width: 767.98px) {
+  /* Hero buttons spacing */
+  #hero .d-flex.gap-3 {
+    margin-bottom: 1.5rem; /* change this value to increase/decrease spacing */
+  }
 
-/* desktop hover/focus state */
-.gradient-hover:hover,
-.gradient-hover:focus,
-.gradient-hover:active {
-  background-image: linear-gradient(135deg, rgba(0,245,255,0.12) 0%, rgba(0,123,255,0.14) 50%, rgba(0,245,255,0.08) 100%);
-  box-shadow: 0 8px 24px rgba(0,123,255,0.08);
-  transform: translateY(-3px);
-}
+  /* If your hero buttons are inside another wrapper, add a more specific rule:
+     #hero .container .d-flex.gap-3 { margin-bottom: 1.5rem; }
+  */
 
-/* class-based hover (used by JS on touch devices) */
-.gradient-hover.hover {
-  background-image: linear-gradient(135deg, rgba(0,245,255,0.12) 0%, rgba(0,123,255,0.14) 50%, rgba(0,245,255,0.08) 100%);
-  box-shadow: 0 8px 24px rgba(0,123,255,0.08);
-  transform: translateY(-3px);
-}
+  /* Contact column spacing: add space above the "Send Me a Message" column heading
+     We target the second column in the row (col-lg-6 + col-lg-6) to avoid changing the first column's headings */
+  #contact .row > .col-lg-6 + .col-lg-6 {
+    margin-top: 1.25rem;  /* pushes the entire second column down on mobile */
+  }
 
-/* On small screens we want the gradient to appear more easily (since :hover isn't reliable) */
-/* Option A: show gradient on tap (we provide JS below). */
-/* Option B (fallback): show a subtle gradient by default on very small screens */
-@media (max-width: 575.98px) {
-  .gradient-hover.mobile-always {
-    background-image: linear-gradient(135deg, rgba(0,245,255,0.06) 0%, rgba(0,123,255,0.08) 50%, rgba(0,245,255,0.04) 100%);
+  /* Additionally, ensure the heading itself has breathing room */
+  #contact .row > .col-lg-6 + .col-lg-6 h3 {
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
   }
 }
 
-/* ensure text color remains readable on gradient */
-.gradient-hover,
-.gradient-hover * {
-  transition: color 160ms ease;
+/* Desktop/tablet: slightly larger spacing but less than mobile */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  #hero .d-flex.gap-3 {
+    margin-bottom: 1rem;
+  }
+  #contact .row > .col-lg-6 + .col-lg-6 {
+    margin-top: 0.5rem;
+  }
 }
 
+/* Safe fallback for any card spacing conflicts */
+.card.p-4.h-100 {
+  /* if cards are bunching up, increase internal padding or margin-bottom */
+  margin-bottom: 1rem;
+}
 
-
+/* If you want more spacing between form fields on mobile */
+@media (max-width: 767.98px) {
+  #contact .form-control {
+    margin-bottom: 1rem;
+  }
+}
