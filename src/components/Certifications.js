@@ -12,8 +12,56 @@ const Certifications = () => {
   }, []);
 
   const certifications = [
+     {
+      image: "certificates/sql.png",
+      title: "Working with Subqueries in SQL",
+      issuer: "Coursera",
+      date: "Issued April 2025"
+    }, 
     {
-      image: "certificates/python.png",
+      image: "certificates/cc.jpg",
+      title: "Cloud Computing",
+      issuer: "NPTEL Swayam",
+      date: "Issued November 2025"
+    }, {
+      image: "certificates/infosys.jpg",
+      title: "Pragati:Path to Future-cohort 5",
+      issuer: "Infosys Springboard",
+      date: "Issued September 2025"
+    },
+    {
+      image: "certificates/conference.jpg",
+      title: "ICAIIHI Conference",
+      issuer: "ICAIIHI",
+      date: "Issued December 2025"
+    },
+    {
+      image: "certificates/HCI.jpg",
+      title: "Human Computer Interaction",
+      issuer: "NPTEL Swayam",
+      date: "Issued April 2025"
+    },
+    {
+      image: "certificates/IOT.jpg",
+      title: "Internet Of Things",
+      issuer: "NPTEL Swayam",
+      date: "Issued April 2025"
+    }, 
+    {
+      image: "certificates/oracle-1.png",
+      title: "Oracle Cloud Infrastructure 2025 Certified Generative Al Professional",
+      issuer: "Oracle University",
+      date: "Issued October 2025"
+    }, 
+    {
+      image: "certificates/oracle-2.png",
+      title: "Oracle Cloud Infrastructure 2025 Certified Al Foundations Associate",
+      issuer: "Oracle University",
+      date: "Issued October 2025"
+    }, 
+
+    {
+      image: "certificates/kalam.jpeg",
       title: "Python For Data Science",
       issuer: "IBM Cognitive Class.ai",
       date: "Issued July 2024"
