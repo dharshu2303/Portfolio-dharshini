@@ -60,12 +60,7 @@ const Certifications = () => {
       date: "Issued October 2025"
     }, 
  
-    {
-      image: "certificates/kalam.jpeg",
-      title: "Python For Data Science",
-      issuer: "IBM Cognitive Class.ai",
-      date: "Issued July 2024"
-    },
+
     {
       image: "certificates/communication.png",
       title: "Communication Skills",
