@@ -59,7 +59,7 @@ const Certifications = () => {
       issuer: "Oracle University",
       date: "Issued October 2025"
     }, 
-
+ 
     {
       image: "certificates/kalam.jpeg",
       title: "Python For Data Science",
